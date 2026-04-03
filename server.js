@@ -5,6 +5,11 @@ const DATA_FILE = './data/tasks.json';
 
 app.use(express.json());
 
+// Root route to check connection
+app.get('/', (req, res) => {
+    res.send('CRUD API is running! Visit /tasks to see your data.');
+});
+
 // Get all
 app.get('/tasks', (req, res) => {
   const data = JSON.parse(fs.readFileSync(DATA_FILE));
