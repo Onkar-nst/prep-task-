@@ -5,10 +5,7 @@ const DATA_FILE = './data/tasks.json';
 
 app.use(express.json());
 
-// Root route to check connection
-app.get('/', (req, res) => {
-    res.send('CRUD API is running! Visit /tasks to see your data.');
-});
+app.use(express.static('public'));
 
 // Get all
 app.get('/tasks', (req, res) => {
