@@ -7,12 +7,25 @@ const PORT = 3000;
 app.use(express.json());
 app.use(express.static('public'));
 
-const DATA_FILE = path.join(__dirname, 'data', 'tasks.json');
+const DATA_DIR = path.join(__dirname, 'data');
+const DATA_FILE = path.join(DATA_DIR, 'tasks.json');
+
+// Ensure data folder and file exist
+if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR);
+}
+if (!fs.existsSync(DATA_FILE)) {
+    fs.writeFileSync(DATA_FILE, '[]');
+}
 
 // Helper to read data
 const readTasks = () => {
-    const data = fs.readFileSync(DATA_FILE, 'utf8');
-    return JSON.parse(data);
+    try {
+        const data = fs.readFileSync(DATA_FILE, 'utf8');
+        return JSON.parse(data);
+    } catch (e) {
+        return [];
+    }
 };
 
 // Helper to write data
