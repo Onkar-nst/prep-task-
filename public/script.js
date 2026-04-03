@@ -4,6 +4,7 @@ function loadTasks() {
         .then(res => res.json())
         .then(data => {
             const list = document.getElementById('taskList');
+
             list.innerHTML = ''; // clear current list
             
             data.forEach(task => {
@@ -32,7 +33,7 @@ function loadTasks() {
         });
 }
 
-// Add a new task
+// new task adder
 function addTask() {
     const input = document.getElementById('taskInput');
     const title = input.value;
@@ -49,7 +50,7 @@ function addTask() {
     });
 }
 
-// Toggle connection
+// toggle option 
 function toggleTask(id, currentStatus) {
     fetch('/tasks/' + id, {
         method: 'PUT',
@@ -60,7 +61,7 @@ function toggleTask(id, currentStatus) {
     });
 }
 
-// Delete task
+// delete button 
 function deleteTask(id) {
     fetch('/tasks/' + id, {
         method: 'DELETE'
@@ -68,6 +69,4 @@ function deleteTask(id) {
         loadTasks();
     });
 }
-
-// Initial load
 loadTasks();

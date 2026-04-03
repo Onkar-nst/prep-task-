@@ -4,16 +4,13 @@ const app = express();
 const DATA_FILE = './data/tasks.json';
 
 app.use(express.json());
-
 app.use(express.static('public'));
 
-// Get all
 app.get('/tasks', (req, res) => {
   const data = JSON.parse(fs.readFileSync(DATA_FILE));
   res.json(data);
 });
 
-// Create
 app.post('/tasks', (req, res) => {
   const data = JSON.parse(fs.readFileSync(DATA_FILE));
   const newTask = { id: Date.now(), ...req.body };
@@ -22,7 +19,6 @@ app.post('/tasks', (req, res) => {
   res.json(newTask);
 });
 
-// Update (toggle etc)
 app.put('/tasks/:id', (req, res) => {
   let data = JSON.parse(fs.readFileSync(DATA_FILE));
   data = data.map(t => t.id == req.params.id ? { ...t, ...req.body } : t);
@@ -30,7 +26,6 @@ app.put('/tasks/:id', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-// Delete
 app.delete('/tasks/:id', (req, res) => {
   let data = JSON.parse(fs.readFileSync(DATA_FILE));
   data = data.filter(t => t.id != req.params.id);
